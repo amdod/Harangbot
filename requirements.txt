@@ -1,0 +1,5 @@
+discord.py==1.2.5
+asyncio==3.4.3
+openpyxl==2.6.1
+gspread==3.6.0
+oauth2client==4.1.3
