@@ -172,7 +172,16 @@ async def on_message(message):
             desc = ws.cell(3, 1).value
 
             ws = await get_spreadsheet('temp2')
-            participant = ws.get_all_values()
+            participant = ws.col_values(1)
+
+            # list에 \n 추가
+            for index, value in enumerate(participant):
+                participant[index] = participant[index] + '\n'
+
+            # list to string and replace "," to ""
+            participant = ','.join(participant)
+            participant = participant.replace(",", "")
+
             counts = ws.row_count
 
             embed = discord.Embed(title="오늘의 스크림", description=desc, color=12745742)
