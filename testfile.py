@@ -109,11 +109,10 @@ async def on_message(message):
 
             ws = await get_spreadsheet('temp2')
             ws.resize(rows=1, cols=1)
-            #
+            ws.append_row([author.mention])
 
             ws = await get_spreadsheet('temp')
             ws.resize(rows=4, cols=1)
-            ws.append_row([author.mention])
 
             ws.append_row([author.mention])
             ws.append_row([time])
