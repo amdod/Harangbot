@@ -92,6 +92,10 @@ async def on_message(message):
         if content == '':
             return
 
+        if content == "팀편성":
+            await message.channel.send("팀편성 해주세요!\n" + "https://tenor.com/view/thinking-think-tap-tapping-spongebob-gif-5837190")
+            return
+
         if content.startswith("스크림개최"):
             opener = content.split(" ")[0]
             time = content.split(" ")[1]
@@ -105,9 +109,11 @@ async def on_message(message):
 
             ws = await get_spreadsheet('temp2')
             ws.resize(rows=1, cols=1)
+            #
 
             ws = await get_spreadsheet('temp')
             ws.resize(rows=4, cols=1)
+            ws.append_row([author.mention])
 
             ws.append_row([author.mention])
             ws.append_row([time])
@@ -196,7 +202,8 @@ async def on_message(message):
             # 예정된 스크림이 있는지 확인
             print("개최자 변경")
             result = await is_spreadsheet_empty('temp')
-            if result is True: #is empty
+            # is empty
+            if result is True:
                 await message.channel.send("오늘은 예정된 스크림이 없습니다")
                 return
 
