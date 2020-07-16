@@ -93,7 +93,7 @@ async def on_message(message):
             return
 
         if content == "팀편성":
-            await message.channel.send("팀편성 해주세요!\n" + "https://tenor.com/view/thinking-think-tap-tapping-spongebob-gif-5837190")
+            await message.channel.send("@here 팀편성 해주세요!\n" + "https://tenor.com/view/thinking-think-tap-tapping-spongebob-gif-5837190")
             return
 
         if content.startswith("스크림개최"):
