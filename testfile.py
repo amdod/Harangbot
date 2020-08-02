@@ -96,6 +96,11 @@ async def on_message(message):
             await message.channel.send("@here 팀편성 해주세요!\n" + "https://tenor.com/view/thinking-think-tap-tapping-spongebob-gif-5837190")
             return
 
+        if content == "스크림":
+            await message.channel.send("각다귀 : 스크림 시범시간이 종료되었습니다. 스크림 데이터, 문제점 등을 검토 중입니다. 운영진 회의 이후 재개 일정을 발표하겠습니다")
+            return
+
+        """
         if content.startswith("스크림개최"):
             opener = content.split(" ")[0]
             time = content.split(" ")[1]
@@ -241,7 +246,7 @@ async def on_message(message):
                 await message.channel.send("내전 개최자 또는 운영진만 내전을 종료할 수 있습니다.")
                 return
 
-            # 내전 종료하는 작업 준비
+            # 스크림 종료하는 작업 준비
             ws = await get_spreadsheet('temp')
             ws.clear()
             ws.resize(rows=4, cols=1)
@@ -252,7 +257,7 @@ async def on_message(message):
 
             await message.channel.send("@everyone \n 스크림이 종료되었습니다")
             return
-
+        """
         if content == "하랑봇":
             embed = discord.Embed(title=":robot:하랑봇:robot:", description="하랑봇 ver1.3 온라인!", color=3066993)
             embed.set_thumbnail(
