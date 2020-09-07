@@ -64,7 +64,7 @@ async def get_member_by_battletag(battletag):
 
 
 async def get_opener(self):
-    ws = await get_spreadsheet('temp')
+    ws = await get_spreadsheet('current_scream')
     return ws.cell(1, 1).value
 
 
@@ -102,16 +102,16 @@ async def on_message(message):
             desc = content[12:]
 
             # 개최될 스크림이 있는지 확인
-            result = await is_spreadsheet_empty('temp')
+            result = await is_spreadsheet_empty('current_scream')
             if result is False:
                 await message.channel.send("이미 개최될 스크림이 있습니다")
                 return
 
-            ws = await get_spreadsheet('temp2')
+            ws = await get_spreadsheet('current_scream_list')
             ws.resize(rows=1, cols=1)
             ws.append_row([author.mention])
 
-            ws = await get_spreadsheet('temp')
+            ws = await get_spreadsheet('current_scream')
             ws.resize(rows=4, cols=1)
 
             ws.append_row([author.mention])
@@ -123,13 +123,13 @@ async def on_message(message):
 
         if content == "스크림신청":
             # 예정된 스크림이 있는지 확인
-            result = await is_spreadsheet_empty('temp')
+            result = await is_spreadsheet_empty('current_scream')
             if result is True:
                 await message.channel.send("오늘은 예정된 스크림이 없습니다")
                 return
 
             # 스크림 신청
-            ws = await get_spreadsheet('temp2')
+            ws = await get_spreadsheet('current_scream_list')
             try:
                 ws.find(author.mention)
             except:
@@ -142,13 +142,13 @@ async def on_message(message):
 
         if content == "스크림신청취소":
             # 예정된 스크림이 있는지 확인
-            result = await is_spreadsheet_empty('temp')
+            result = await is_spreadsheet_empty('current_scream')
             if result is True:
                 await message.channel.send("오늘은 예정된 스크림이 없습니다")
                 return
 
             # 스크림 신청 취소
-            ws = await get_spreadsheet('temp2')
+            ws = await get_spreadsheet('current_scream_list')
             try:
                 ws.find(author.mention)
             except:
@@ -164,19 +164,19 @@ async def on_message(message):
 
         if content == "스크림":
             # 예정된 스크림이 있는지 확인
-            result = await is_spreadsheet_empty('temp')
+            result = await is_spreadsheet_empty('current_scream')
             if result is True:
                 await message.channel.send("오늘은 예정된 스크림이 없습니다")
                 return
 
             # 스크림 정보를 보여주기 위한 작업
-            ws = await get_spreadsheet('temp')
+            ws = await get_spreadsheet('current_scream')
 
             opener = ws.cell(1, 1).value
             time = ws.cell(2, 1).value
             desc = ws.cell(3, 1).value
 
-            ws = await get_spreadsheet('temp2')
+            ws = await get_spreadsheet('current_scream_list')
             participant = ws.col_values(1)
 
             # list에 \n 추가
@@ -200,7 +200,7 @@ async def on_message(message):
         if content.startswith("개최자변경"):
             # 예정된 스크림이 있는지 확인
             print("개최자 변경")
-            result = await is_spreadsheet_empty('temp')
+            result = await is_spreadsheet_empty('current_scream')
             # is empty
             if result is True:
                 await message.channel.send("오늘은 예정된 스크림이 없습니다")
@@ -209,14 +209,14 @@ async def on_message(message):
             # 새로운 개최자로 변경
             newopener = content.split(" ")[1]
 
-            ws = await get_spreadsheet('temp')
+            ws = await get_spreadsheet('current_scream')
             ws.update_cell(1, 1, newopener)
             await message.channel.send("개최자 업데이트 완료")
             return
 
         if content.startswith("시간변경"):
             # 예정된 스크림이 있는지 확인
-            result = await is_spreadsheet_empty('temp')
+            result = await is_spreadsheet_empty('current_scream')
             if result is True:
                 await message.channel.send("오늘은 예정된 스크림이 없습니다")
                 return
@@ -224,14 +224,14 @@ async def on_message(message):
             # 새로운 시간으로 업데이트
             newtime = content.split(" ")[1]
 
-            ws = await get_spreadsheet('temp')
+            ws = await get_spreadsheet('current_scream')
             ws.update_cell(2, 1, newtime)
             await message.channel.send("시간 업데이트 완료")
             return
 
         if content == "스크림종료":
             # 종료할 스크림이 있는지 확인
-            result = await is_spreadsheet_empty('temp')
+            result = await is_spreadsheet_empty('current_scream')
             if result is True:
                 await message.channel.send("종료할 스크림이 없습니다")
                 return
@@ -242,11 +242,11 @@ async def on_message(message):
                 return
 
             # 스크림 종료하는 작업 준비
-            ws = await get_spreadsheet('temp')
+            ws = await get_spreadsheet('current_scream')
             ws.clear()
             ws.resize(rows=4, cols=1)
 
-            ws = await get_spreadsheet('temp2')
+            ws = await get_spreadsheet('current_scream_list')
             ws.resize(rows=1, cols=1)
             ws.clear()
 
