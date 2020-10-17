@@ -254,7 +254,7 @@ async def on_message(message):
             return
 
         if content == "하랑봇":
-            embed = discord.Embed(title=":robot:하랑봇:robot:", description="하랑봇 ver1.3 온라인!", color=3066993)
+            embed = discord.Embed(title=":robot:하랑봇:robot:", description="하랑봇 ver1.3 온라인! `하랑봇 이미지 구하는 중! 디도에게 문의!!!`", color=3066993)
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/708306592465944591/723914634116988988/3b53af51b6da75d2.png")
             await channel.send(embed=embed)
