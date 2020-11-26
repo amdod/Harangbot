@@ -19,6 +19,8 @@ current_time = lambda: datetime.datetime.utcnow() + datetime.timedelta(hours=9)
 def is_moderator(member):
     return "운영진" in map(lambda x: x.name, member.roles)
 
+def is_dcstaff(member):
+    return "스텝-DC" in map(lambda x: x.name, member.roles)
 
 @client.event
 async def on_ready():
@@ -97,9 +99,10 @@ async def on_message(message):
             return
 
         if content.startswith("스크림개최"):
-            opener = content.split(" ")[0]
+            opener = author.mention
             time = content.split(" ")[1]
-            desc = content[12:]
+            limit = content.split(" ")[2]
+            desc = content[15:]
 
             # 개최될 스크림이 있는지 확인
             result = await is_spreadsheet_empty('current_scream')
@@ -107,6 +110,7 @@ async def on_message(message):
                 await message.channel.send("이미 개최될 스크림이 있습니다")
                 return
 
+            # 개최자 자동 1번 등록
             ws = await get_spreadsheet('current_scream_list')
             ws.resize(rows=1, cols=1)
             ws.append_row([author.mention])
@@ -114,11 +118,12 @@ async def on_message(message):
             ws = await get_spreadsheet('current_scream')
             ws.resize(rows=4, cols=1)
 
-            ws.append_row([author.mention])
+            ws.append_row([opener])
             ws.append_row([time])
+            ws.append_row([limit])
             ws.append_row([desc])
 
-            await message.channel.send("@everyone \n {} 스크림이 열립니다. \n 주최자 : {}".format(time, author.mention))
+            await message.channel.send("@everyone \n 오늘 {} 스크림이 열립니다. \n 주최자 : {} \n 제한인원 : {}명".format(time, author.mention, limit))
             return
 
         if content == "스크림신청":
@@ -174,7 +179,8 @@ async def on_message(message):
 
             opener = ws.cell(1, 1).value
             time = ws.cell(2, 1).value
-            desc = ws.cell(3, 1).value
+            limit = ws.cell(3, 1).value
+            desc = ws.cell(4, 1).value
 
             ws = await get_spreadsheet('current_scream_list')
             participant = ws.col_values(1)
@@ -192,6 +198,7 @@ async def on_message(message):
 
             embed = discord.Embed(title="오늘의 스크림", description=desc, color=12745742)
             embed.add_field(name="시간", value=time, inline=False)
+            embed.add_field(name="제한 인원", value=limit, inline=False)
             embed.add_field(name="개최자", value=opener, inline=False)
             embed.add_field(name="참가자 {}명".format(counts), value=participant, inline=False)
 
@@ -255,7 +262,7 @@ async def on_message(message):
             return
 
         if content == "하랑봇":
-            embed = discord.Embed(title=":robot:하랑봇:robot:", description="하랑봇 ver1.3 온라인! `하랑봇 이미지 구하는 중! 디도에게 문의!!!`", color=3066993)
+            embed = discord.Embed(title=":robot:하랑봇:robot:", description="하랑봇 ver1.3 온라인!", color=3066993)
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/708306592465944591/723914634116988988/3b53af51b6da75d2.png")
             await channel.send(embed=embed)
