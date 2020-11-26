@@ -237,6 +237,21 @@ async def on_message(message):
             await message.channel.send("시간 업데이트 완료")
             return
 
+        if content.startswith("제한인원변경"):
+            # 예정된 스크림이 있는지 확인
+            result = await is_spreadsheet_empty('current_scream')
+            if result is True:
+                await message.channel.send("오늘은 예정된 스크림이 없습니다")
+                return
+
+            # 새로운 시간으로 업데이트
+            newlimit = content.split(" ")[1]
+
+            ws = await get_spreadsheet('current_scream')
+            ws.update_cell(3, 1, newlimit)
+            await message.channel.send("제한 인원 업데이트 완료")
+            return
+
         if content == "스크림종료":
             # 종료할 스크림이 있는지 확인
             result = await is_spreadsheet_empty('current_scream')
@@ -279,7 +294,7 @@ async def on_message(message):
             embed = discord.Embed(title="명령어 모음", description="하랑봇 문의사항은 디도에게 전달해주세요", color=12745742)
             embed.add_field(name="LINK for Everything", value="문의방, 수다방, 공지방, 하랑카페, 신입안내", inline=False)
             embed.add_field(name="운영진 및 스탭 목록", value="운영진", inline=False)
-            embed.add_field(name="스크림", value="스크림개최 HH:MM 제한인원 설명, 스크림종료, 스크림신청, 스크림신청취소,\n스크림, 시간변경 HH:MM, 개최자변경 @멘션", inline=False)
+            embed.add_field(name="스크림", value="스크림개최 HH:MM 제한인원 설명, 스크림종료, 스크림신청, 스크림신청취소,\n스크림, 시간변경 HH:MM, 개최자변경 @멘션, 제한인원변경 N", inline=False)
             embed.add_field(name="Utility", value="주사위, 맵추천, 한줄소개, 한줄소개설문지", inline=False)
             await channel.send(embed=embed)
             return
@@ -401,6 +416,7 @@ async def on_message(message):
             embed.set_thumbnail(url=thumbnaillink)
 
         await channel.send(embed=embed)
+
 
 
 access_token = os.environ["BOT_TOKEN"]
