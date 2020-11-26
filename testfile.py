@@ -181,7 +181,8 @@ async def on_message(message):
 
             # list에 \n 추가
             for index, value in enumerate(participant):
-                participant[index] = participant[index] + '\n'
+                number = index + 1
+                participant[index] = str(number) + '. ' + participant[index] + '\n'
 
             # list to string and replace "," to ""
             participant = ','.join(participant)
