@@ -270,30 +270,6 @@ async def 순위(message):
 
 
 @client.command()
-async def 랭킹(message):
-    if message.channel.id not in gamble_channels: return
-    ws = await get_spreadsheet()
-    if check_maintenance_state(ws):
-        await message.channel.send("진정하시라고요.")
-        return
-    user = author(message)
-    msg = content(message)
-
-    data = ws.get_all_values()[0:]
-    data.sort(key=lambda x: int(x[1]), reverse=True)
-
-    for j in data:
-        del j[2]
-
-    rowcount = ws.row_count;
-    print(rowcount)
-
-    for i in range(0, rowcount):
-        data[i][1] = data[i][1]
-        await message.channel.send(data[i])
-    return
-
-@client.command()
 async def 도움말(message):
     if message.channel.id not in gamble_channels: return
     embed = discord.Embed(title="gamble bot", description="도박 봇입니다.", color=0xeee657)
@@ -304,7 +280,7 @@ async def 도움말(message):
                     value="G를 걸고, 동전을 던집니다. 맞추면 두 배로 돌려받고, 틀리면 돌려받지 못합니다.\n0G를 소지중이라면 1G를 걸어 성공시 1G를 받을 수 있습니다.",
                     inline=False)
     embed.add_field(name=">>순위\n", value="자신의 순위와 동순위인 사람 수를 알려줍니다.\n", inline=False)
-    embed.add_field(name=">>랭킹\n", value="순위까지의 랭킹을 표시합니다.\n", inline=False)
+    embed.add_field(name=">>랭킹\n", value="공사중.\n", inline=False)
     await message.send(embed=embed)
 
 
