@@ -344,6 +344,20 @@ async def on_message(message):
             await message.channel.send("오늘 당신의 주사위는....!  **||   " + diceresult + "   ||**!!!!")
             return
 
+        if content == "로또":
+            lotteryNumbers = []
+
+            for i in range(0, 6):
+                number = random.randint(1, 45)
+                while number in lotteryNumbers:
+                    number = random.randint(1, 45)
+                lotteryNumbers.append(number)
+
+            lotteryNumbers.sort()
+            lotto = ' '.join(map(str, lotteryNumbers))
+            await message.channel.send("Gook luck!\n" + lotto)
+            return
+
         if content == "맵추천":
             # 파리 호라이즌
             maps = "네팔 리장타워 부산 오아시스 일리오스 볼스카야인더스터리 아누비스신전 하나무라 66번국도 감시기지:지브롤터 도라도 리알토 쓰레기촌 하바나 눔바니 블리자드월드 아이헨발데 왕의길 할리우드"
@@ -421,3 +435,5 @@ async def on_message(message):
 
 access_token = os.environ["BOT_TOKEN"]
 client.run(access_token)
+
+
