@@ -11,8 +11,8 @@ from time import sleep
 
 daily = 2000
 
-gamble_channels = [608584364749619250]
-gamble_notify = 608584364749619250
+gamble_channels = [781876213051424788]
+gamble_notify = 781876213051424788
 ws_name = 'gamble'
 
 content = lambda ctx: ctx.message.content
