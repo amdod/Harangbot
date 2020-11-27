@@ -11,7 +11,7 @@ from time import sleep
 
 daily = 2000
 
-gamble_channels = [781876213051424788]
+gamble_channels = 781876213051424788, 781885568987562005
 gamble_notify = 781876213051424788
 ws_name = 'gamble'
 
