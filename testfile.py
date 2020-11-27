@@ -355,7 +355,7 @@ async def on_message(message):
 
             lotteryNumbers.sort()
             lotto = ' '.join(map(str, lotteryNumbers))
-            await message.channel.send("Gook luck!\n" + lotto)
+            await message.channel.send("Good luck!\n" + lotto)
             return
 
         if content == "맵추천":
