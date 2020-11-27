@@ -138,7 +138,7 @@ async def 공사(message):
 
 
 @client.command()
-async def 초기화(message):
+async def 초기화는디도(message):
     ws = await get_spreadsheet()
     ws.resize(rows=1, cols=3)
     await message.channel.send("초기화.")
