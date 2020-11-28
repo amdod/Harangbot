@@ -266,7 +266,7 @@ async def 순위(message):
     moneys = [*sorted(map(lambda x: int(x) if x.isnumeric() else -1, ws.col_values(2)), reverse=True)]
     rank = moneys.index(money) + 1
     same = moneys.count(money)
-    await message.channel.send("{}\n현재 {}위(동순위 {}명)\n\n {}".format(user.mention, rank, same))
+    await message.channel.send("{}\n현재 {}위(동순위 {}명)".format(user.mention, rank, same))
 
 
 @client.command()
